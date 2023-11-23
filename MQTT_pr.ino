@@ -1,20 +1,28 @@
 // Функция отправки данных по протоколу MQTT
 void MQTT_send(){
-  if(settings.mqtt_en){
-   unsigned long nows = millis();
-  if (nows - lastMsg > (settings.mqtt_time*1000) && (settings.mqtt_time*1000) > 999) {
-    if(WiFi.status() == WL_CONNECTED) {
-      client.setServer(settings.mqtt_serv, 1883);
+  if(settings.mqtt_en && WiFi.status() == WL_CONNECTED){
+   uint32_t nows = millis();
+   String input = settings.mqtt_serv;
+         int colonIndex = input.indexOf(':');
+         String ipAddress;
+         String port;
+
+        if (colonIndex != -1) {
+             ipAddress = input.substring(0, colonIndex);
+             port = input.substring(colonIndex + 1);
+          }
+  if(nows - lastMsg > (settings.mqtt_time*1000) && (settings.mqtt_time*1000) > 999){
+      client.setServer(ipAddress.c_str(), port.toInt());
       client.loop();
       String top = settings.mqtt_topic+"/jsondata";
       String topics[] = { String(settings.mqtt_topic)+"/CP10s", String(settings.mqtt_topic)+"/CP1m", String(settings.mqtt_topic)+"/CP5m", String(settings.mqtt_topic)+"/CP60m", String(settings.mqtt_topic)+"/val10s", String(settings.mqtt_topic)+"/val1m", String(settings.mqtt_topic)+"/val5m", String(settings.mqtt_topic)+"/val60m"};
       String data[]   = { String(CP10s), String(CP1m), String(CP5m), String(CP60m), String(val10s), String(val1m), String(val5m), String(val60m)};
 
      if(client.connected()){
-       count_rf = 0;
+          count_rf = 0;
           if(settings.json_en){
              client.publish(top.c_str(), JSON_DATA().c_str());
-          }else{
+             }else{
               for (int i = 0; i < 8; i++) {
                   client.publish(topics[i].c_str(), data[i].c_str());
                 }
@@ -38,7 +46,6 @@ void MQTT_send(){
             }
           }
         }
-      }
    lastMsg = nows; 
   }
  }

@@ -48,7 +48,7 @@ boolean stat_reboot, led_stat;
 const char *myHostname  = "Cyberex_sensors";           // Имя создаваемого хоста Cyberex_sensor.local 
 const char *softAP_ssid = "CYBEREX-R-SENS";            // Имя создаваемой точки доступа Wi-Fi
 
-String version_code = "R-1.5.10.12";
+String version_code = "R-1.5.11.23";
 
 // Переменная для хранения времени последней попытки сетевого подключения
 unsigned long lastConnectTry = 0;

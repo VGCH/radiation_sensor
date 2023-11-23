@@ -20,7 +20,7 @@ void send_config(){
   html += "<form id=\"config-form\" >";
   html += "<div id=\"response\">";
   html += "<label for=\"ip\">IP адрес сервера MQTT:</label>";
-  html += "<input type=\"text\" id=\"ip\" name=\"IPMQTT\" placeholder=\"192.168.1.2\" pattern=\"^((\\d{1,2}|1\\d\\d|2[0-4]\\d|25[0-5])\\.){3}(\\d{1,2}|1\\d\\d|2[0-4]\\d|25[0-5])$\" value=\""+String(settings.mqtt_serv)+"\" required><br>";
+  html += "<input type=\"text\" id=\"ip\" name=\"IPMQTT\" placeholder=\"192.168.1.2:1883\" pattern=\"^((\\d{1,2}|1\\d\\d|2[0-4]\\d|25[0-5])\\.){3}(\\d{1,2}|1\\d\\d|2[0-4]\\d|25[0-5]):(\\d{1,5})$\" value=\""+String(settings.mqtt_serv)+"\" required><br>";
   html += "<label for=\"login\">Логин:</label>";
   html += "<input type=\"text\" id=\"login\" name=\"USERNAME\" placeholder=\"Логин MQTT\" value=\""+settings.mqtt_user+"\" required><br>";
   html += "<label for=\"password\">Пароль:</label>";
